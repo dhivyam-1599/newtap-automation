@@ -1,0 +1,163 @@
+{
+  "client_ref_id": "{{client_ref_id}}",
+  "pan_detail": {
+    "pan_number": "FXTPD9130B",
+    "pan_name": "Dhivya M",
+    "dob": "1999-05-01"
+  },
+  "user_detail": {
+    "user_id": "24f05d9a-07d7-448a-9ce9-3fe2db2022c2",
+    "phone_no": "9092366584",
+    "user_name": "Ms Dhivya",
+    "user_email": "dhivyam1599@gmail.com"
+  },
+  "kyc_detail": {
+    "type": "CKYC",
+    "data": {
+      "name": "Dhivya",
+      "segregated_name": {
+        "salutation": "MS",
+        "first_name": "Dhivya",
+        "middle_name": "",
+        "last_name": "M"
+      },
+      "father_name": "Mr MANIVEL S",
+      "mother_name": "Mrs TAMIL SELVI M",
+      "dob": "1999-05-01",
+      "gender": "M",
+      "image_url":"{{image_url}}",
+      "segregated_address": {
+        "address_line1": "C O NEHRU PRASAD DUBEY Q NO 3289 SECTOR 8 D NEW",
+        "address_line2": "BOKARO STEEL CITY BOKARO JHARKHAND 827009",
+        "address_line3": "Srikakulam",
+        "city": "Srikakulam",
+        "district": "Srikakulam",
+        "state": "ANDHRA_PRADESH",
+        "country": "INDIA",
+        "pincode": 532409
+      },
+      "address": "C O NEHRU PRASAD DUBEY Q NO 3289 SECTOR 8 D NEW BOKARO STEEL CITY BOKARO JHARKHAND 827009",
+      "current_address": "C O NEHRU PRASAD DUBEY Q NO 3289 SECTOR 8 D NEW BOKARO STEEL CITY BOKARO JHARKHAND 827009",
+      "segregated_current_address": {
+        "address_line1": "C O NEHRU PRASAD DUBEY Q NO 3289 SECTOR 8 D NEW",
+        "address_line2": "BOKARO STEEL CITY BOKARO JHARKHAND 827009",
+        "address_line3": "Srikakulam",
+        "city": "Srikakulam",
+        "district": "Srikakulam",
+        "state": "ANDHRA_PRADESH",
+        "country": "INDIA",
+        "pincode": 532409
+      },
+      "ckyc_id": "10070610170923",
+      "aadhaar_id": "azSDY0LS4NXO/JQJNvxa7w==",
+      "account_type": "Normal",
+      "search_result_location":"{{search_result_location}}",
+      "download_result_location": "{{download_result_location}}",
+      "kyc_completion_date": "2024-06-18",
+      "kyc_identifier": "10070610170923",
+      "pass_key": "10070610170923",
+      "pdf_download_result_location": "https://prod-janus-parfait-secrets.s3.ap-south-1.amazonaws.com/kyc_details/digilocker/download_pdf/2024/12/31/08/21a3a25d-1f88-4aaa-ac36-5a074ea51046.pdf",
+      "os_ocr_url": "https://os-parfait-kyc.s3.ap-south-1.amazonaws.com/ocr/ckyc_ocr_validation/2024/07/03/15/33/86695dd7-9f79-4043-a324-70686cbb0e65"
+    },
+    "pac_reference_id": "60a09a47-04b4-404d-9309-1783430e3950"
+  },
+  "liveliness_detail": {
+    "vendor": "HYPERVERGE",
+    "data": {
+      "selfie_image":"{{selfie_image}}",
+      "liveliness": {
+        "result": "SUCCESS",
+        "score": 1,
+        "manual_review_required": false
+      },
+      "face_match": {
+        "result": "SUCCESS",
+        "score": 60,
+        "manual_review_required": false
+      },
+      "timestamp": "2024-04-07T00:00:00"
+    }
+  },
+  "bank_account_verification_detail": {
+    "bank_account_number": "1705993629261",
+    "ifsc_code": "HDFC0000514",
+    "customer_name": "Dhivya M",
+    "bank_account_name": "Hdfc Bank",
+    "bank_txn_id": "",
+    "penny_drop_date": "2025-12-23"
+  },
+  "geo_location_verification_detail": {
+    "data": {
+      "updated_at": "2022-06-21T00:00:00",
+      "cloudfront-viewer-city": "Gurugram",
+      "cloudfront-viewer-country": "IN",
+      "cloudfront-viewer-postal-code": "122002",
+      "cloudfront-viewer-country-region": "HR",
+      "cloudfront-viewer-time-zone": "Asia/Kolkata",
+      "cloudfront-viewer-country-name": "INDIA",
+      "cloudfront-viewer-longitude": "77.02820",
+      "cloudfront-viewer-latitude": "28.45970",
+      "cloudfront-viewer-country-region-name": "Haryana"
+    },
+    "source": "cloudfront"
+  },
+  "offer_detail": {
+    "credit_limit": "230000.0",
+    "product_id": "CRE-TL-CRED-YBL-CLM-0003",
+    "date_of_credit_limit": [
+      2024,
+      2,
+      1,
+      0,
+      0
+    ],
+    "interest_rate": 11.99,
+    "max_tenure": 72,
+    "expiry_date_of_credit_limit": [
+      2029,
+      2,
+      1,
+      0,
+      0
+    ]
+  },
+  "risk_detail": {
+    "policy_name": "ybl_clm_premium_v1"
+  },
+  "underwriting_details": {
+    "policy_identifier": "ybl_clm_premium_v1",
+    "income": 605445.4,
+    "monthly_liability": 25997,
+    "monthly_income": 50453.78,
+    "revolver_flag": false,
+    "long_term_risk_decile": -9999,
+    "grm_decile": 1,
+    "occupation": "salaried",
+    "date_of_population": "03-02-2025",
+    "stressed_acct_cnt": 0,
+    "st_v2_score": 10,
+    "pl_count": 1,
+    "pl_amount": 987222,
+    "creditcard_activecnt": 3,
+    "age": 30,
+    "annual_foir": 0.52,
+    "foir_cap": 0.7,
+    "foir_balance": 0.17999999999999994,
+    "amount_overdue": 3001,
+    "risk_segment": 1,
+    "dpd_history_3m": 0,
+    "dpd_history_12m": 0,
+    "personalloan_cnt_3m": 0,
+    "bm_decile": -9999
+  },
+  "vcip_detail": {
+    "vcip_enabled": true
+  },
+  "economic_profile": {
+    "occupation": "Salaried",
+    "income_range": {
+      "min": 300000,
+      "max": 1000000
+    }
+  }
+}

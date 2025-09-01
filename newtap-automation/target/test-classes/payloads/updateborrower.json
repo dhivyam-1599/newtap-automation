@@ -1,0 +1,111 @@
+{
+  "data": {
+    "kyc_detail": {
+      "result": {
+        "type": "CKYC",
+        "data": {
+          "name": "Ms DHIVYA  ",
+          "segregated_name": {
+            "salutation": "MS",
+            "first_name": "DHIVYA",
+            "middle_name": "",
+            "last_name": "M"
+          },
+          "father_name": "Mr MANIVEL",
+          "mother_name": "Mrs TAMILSELVI",
+          "dob": "1999-05-01",
+          "gender": "F",
+          "image_url":"{{image_url}}",
+          "address": "gbEEC4ufg5OQTFwtVomunmIohfkuQsfZeRfqsJpr7R+181dJk2/NlrUl+SUPH9ZKIjCvkhcw+iOKY8bK1vuBoX86thaMo7rDR7GwYtDxb5kNF+Rdwn19p8MbNrVM1aCr4Z4Q4p64jTVPuEb0DaT9NfIw7ks8hWZK2B6KNgpoMv+eQBVkhL4KV6i4LFi6sn5L",
+          "segregated_address": {
+            "address_line1": "gbEEC4ufg5OQTFwtVomunmIohfkuQsfZeRfqsJpr7R8Z20uvsGigQIhyxmI1sC2p",
+            "address_line2": "CdZi0c0YJbYhf4Zehh8BaN0mZnap7IDlu43BRA9sbK8QU7aSQirirUd0zGdKSTCD",
+            "address_line3": "azSDY0LS4NXO/JQJNvxa7w==",
+            "city": "Srikakulam",
+            "district": "Srikakulam",
+            "state": "ANDHRA_PRADESH",
+            "country": "INDIA",
+            "pincode": 532409
+          },
+          "current_address": "gbEEC4ufg5OQTFwtVomunmIohfkuQsfZeRfqsJpr7R+181dJk2/NlrUl+SUPH9ZKIjCvkhcw+iOKY8bK1vuBoX86thaMo7rDR7GwYtDxb5kNF+Rdwn19p8MbNrVM1aCr4Z4Q4p64jTVPuEb0DaT9NfIw7ks8hWZK2B6KNgpoMv+eQBVkhL4KV6i4LFi6sn5L",
+          "segregated_current_address": {
+            "address_line1": "gbEEC4ufg5OQTFwtVomunmIohfkuQsfZeRfqsJpr7R8Z20uvsGigQIhyxmI1sC2p",
+            "address_line2": "CdZi0c0YJbYhf4Zehh8BaN0mZnap7IDlu43BRA9sbK8QU7aSQirirUd0zGdKSTCD",
+            "address_line3": "azSDY0LS4NXO/JQJNvxa7w==",
+            "city": "Srikakulam",
+            "district": "Srikakulam",
+            "state": "ANDHRA_PRADESH",
+            "country": "INDIA",
+            "pincode": 532409
+          },
+          "ckyc_id": "7YZ5LsB9WnmVhgMT272JDA==",
+          "aadhaar_id": "azSDY0LS4NXO/JQJNvxa7w=="
+        },
+        "ckyc": {
+          "status": "SUCCESS",
+          "code": "KYC100",
+          "message": "CKYC is Successfull",
+          "data": {
+            "account_type": "Normal",
+            "search_result_location":"{{search_result_location}}",
+            "download_result_location":"{{download_result_location}}",
+            "kyc_completion_date": "2024-06-18",
+            "kyc_identifier": "7YZ5LsB9WnmVhgMT272JDA==",
+            "pass_key": "V1uldBp2NRgPt1XZjEEo7xkK/3Lpi9L/MzD+2Gvr3X0=",
+            "ckyc_id": "7YZ5LsB9WnmVhgMT272JDA=="
+          }
+        }
+      },
+      "references": {
+        "pacReferenceId": "60a09a47-04b4-404d-9309-1783430e3950",
+        "osOcrUrl": "https://os-parfait-kyc.s3.ap-south-1.amazonaws.com/ocr/ckyc_ocr_validation/2024/07/03/15/33/86695dd7-9f79-4043-a324-70686cbb0e65"
+      }
+    },
+    "liveliness_detail": {
+      "kyc_type": "CKYC",
+      "selfie_image":"{{selfie_image}}",
+      "source_image": "kyc_details/ckyc/images/2024/06/19/07/67e0f70b-04df-463a-85c1-7608b91c7c3d.jpeg",
+      "liveliness": {
+        "result": "SUCCESS",
+        "score": 1,
+        "manual_review_required": false,
+        "status_code": "LIV000"
+      },
+      "face_match": {
+        "result": "SUCCESS",
+        "score": 77,
+        "manual_review_required": false,
+        "status_code": "LIV000"
+      },
+      "vendor": "HYPERVERGE",
+      "updated_date": "2024-04-07T00:00:00",
+      "liveliness_consent": true,
+      "selfie_upload_consent": true
+    },
+    "bank_account_verification_detail": {
+      "bank_account_number": "jjQbjKyQtG8K2uKaiJQI4Q==",
+      "ifsc_code": "HDFC0000514",
+      "customer_name": "Dhivya M ",
+      "bank_account_name": "Hdfc Bank"
+    },
+    "geo_location_verification_detail": {
+      "updated_at": "2022-06-21T00:00:00",
+      "cloudfront-viewer-city": "Gurugram",
+      "cloudfront-viewer-country": "IN",
+      "cloudfront-viewer-postal-code": "122002",
+      "cloudfront-viewer-country-region": "HR",
+      "cloudfront-viewer-time-zone": "Asia/Kolkata",
+      "cloudfront-viewer-country-name": "India",
+      "cloudfront-viewer-longitude": "77.02820",
+      "cloudfront-viewer-latitude": "28.45970",
+      "cloudfront-viewer-country-region-name": "Haryana"
+    },
+    "risk_detail": {
+      "annual_income": 375616.16,
+      "is_salaried": true
+    }
+  },
+  "external_reference_id":"{{external_reference_id}}",
+  "crn": "{{crn}}",
+  "reference_id": "{{reference_id}}"
+}
