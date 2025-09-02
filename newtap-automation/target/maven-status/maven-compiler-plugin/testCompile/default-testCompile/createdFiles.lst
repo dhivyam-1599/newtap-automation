@@ -1,0 +1,12 @@
+api/utilities/database/DBhost.class
+api/utilities/database/CashDbquery.class
+api/newtap_api/Service.class
+api/utilities/HeaderUtil.class
+api/newtap_api/Endpoints.class
+api/tests/onboarding_las.class
+api/newtap_api/BaseUrl.class
+api/utilities/PayloadUtils.class
+api/tests/cash_migration.class
+api/utilities/TestDataProviders.class
+api/utilities/database/DBquery.class
+api/utilities/database/PropertyFileReader.class

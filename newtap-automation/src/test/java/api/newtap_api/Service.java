@@ -1,11 +1,7 @@
 package api.newtap_api;
 
 import api.utilities.HeaderUtil;
-import api.utilities.database.PropertyFileReader;
 import io.restassured.response.Response;
-
-import java.io.IOException;
-
 import static io.restassured.RestAssured.given;
 
 

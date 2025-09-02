@@ -19,10 +19,8 @@ public class onboarding_las {
 
 
     public static Response CreateBorrower() throws IOException, InterruptedException {
-      // Step 1: Load initial payload (basic JSON with placeholder)
         String createJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         createJson = createJson.replace("{{reference_id}}", PayloadUtils.referenceID);
-        // Step 2: Make the create API call
         Response response = Service.createborrower(createJson);
         response.then().log().all();
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -40,7 +38,7 @@ public class onboarding_las {
         statusResponse.then().log().all();
         System.out.println("Switch to CRED STAGE VPN");
         Thread.sleep(15000);
-        dBquery.getuserdetails(las_crn); // ✅ Keep this
+        dBquery.getuserdetails(las_crn);
         System.out.println("Switch to NEWTAP UAT VPN");
         Thread.sleep(15000);
         Assert.assertEquals(statusResponse.getStatusCode(), 200);
@@ -75,13 +73,10 @@ public class onboarding_las {
     @Test(dataProvider = "invalidPANDetails", dataProviderClass = TestDataProviders.class)
     public void testInvalidPANDetails(String panNumber, String panName, String reason) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        // Load payload
         ObjectNode root = (ObjectNode) mapper.readTree(
                 new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
         );
-        // Navigate to nested object: data.pan_detail
         ObjectNode panDetail = (ObjectNode) root.path("data").path("pan_detail");
-        // Apply invalid values
         panDetail.put("pan_number", panNumber);
         panDetail.put("pan_name", panName);
         String invalidJson = mapper.writeValueAsString(root);
@@ -96,11 +91,9 @@ public class onboarding_las {
     @Test(dataProvider = "invalidPANAadhar", dataProviderClass = TestDataProviders.class)
     public void testPanAadharLinkage(String panNumber, String panName, String reason) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        // Load payload
         ObjectNode root = (ObjectNode) mapper.readTree(
                 new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
         );
-        // Navigate to nested object: data.pan_detail
         ObjectNode panDetail = (ObjectNode) root.path("data").path("pan_detail");
         // Apply invalid values
         panDetail.put("pan_number", panNumber);
@@ -117,11 +110,9 @@ public class onboarding_las {
     @Test(dataProvider = "invalidUserdetails", dataProviderClass = TestDataProviders.class)
     public void testInvalidUserdetails(String userID, String PhnNo,String UserName,String Email, String reason) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        // Load payload
         ObjectNode root = (ObjectNode) mapper.readTree(
                 new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
         );
-        // Navigate to nested object: data.pan_detail
         ObjectNode UserDetail = (ObjectNode) root.path("data").path("user_detail");
         // Apply invalid values
         UserDetail.put("user_id", userID);
@@ -132,10 +123,8 @@ public class onboarding_las {
         String invalidJson = mapper.writeValueAsString(root);
         Response response = Service.createborrower(invalidJson);
         response.then().log().all();
-        // ✅ Assert HTTP status is 200 (API always returns 200 even for failures)
         Assert.assertEquals(response.getStatusCode(), 200, "Expected HTTP 200");
 
-        // ✅ Now assert JSON body says failure
         boolean success = response.jsonPath().getBoolean("success");
         int errorCode = response.jsonPath().getInt("error_code");
         Assert.assertFalse(success, "Expected success=false but got true");

@@ -24,7 +24,6 @@ public class PayloadUtils {
             throw new IllegalStateException("las_appform or las_crn is null. Make sure to call createborrower before JsonHelper()");
         }
 
-        // Load both payloads
         createJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         updateJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/updateborrower.json")));
 
@@ -50,7 +49,7 @@ public class PayloadUtils {
         return result;
     }
     public static String buildCashMigrationJson() throws IOException {
-        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigration.json")));
+        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationcolending.json")));
         Map<String, String> presigned = PreSignedHelper();
 
         return json
@@ -60,6 +59,7 @@ public class PayloadUtils {
                 .replace("{{search_result_location}}", presigned.get("search_result_location"))
                 .replace("{{download_result_location}}", presigned.get("download_result_location"));
     }
+
 
     public static String generateReferenceId() {
         return "CRE_LAS_UAT_" + UUID.randomUUID().toString().replace("-", "").substring(0, 6);
@@ -81,7 +81,6 @@ public class PayloadUtils {
         System.out.println("search_result_location: " + search_result_location);
         System.out.println("download_result_location: " + download_result_location);
 
-        // Fail fast if any is null
         if (image_url == null || selfie_image == null || search_result_location == null || download_result_location == null) {
             throw new IllegalStateException("One or more pre-signed URLs are null. Check S3 object paths or credentials.");
         }

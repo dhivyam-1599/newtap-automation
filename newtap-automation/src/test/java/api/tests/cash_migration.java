@@ -11,7 +11,7 @@ public class cash_migration {
 
     @Test
     public void Colendingonboarding()throws IOException,InterruptedException {
-       String cashJson = PayloadUtils.buildCashMigrationJson();
+        String cashJson = PayloadUtils.buildCashMigrationJson();
         Response cashcreateresponse = Service.cashonboarding(cashJson);
         cashcreateresponse.then().log().all();
         Assert.assertEquals(cashcreateresponse.getStatusCode(), 200);
