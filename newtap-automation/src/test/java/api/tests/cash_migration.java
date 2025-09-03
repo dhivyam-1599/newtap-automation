@@ -10,12 +10,19 @@ import java.io.IOException;
 public class cash_migration {
 
     @Test
-    public void Colendingonboarding()throws IOException,InterruptedException {
+    public void Colendingonboarding()throws IOException {
         String cashJson = PayloadUtils.buildCashMigrationJson();
         Response cashcreateresponse = Service.cashonboarding(cashJson);
         cashcreateresponse.then().log().all();
         Assert.assertEquals(cashcreateresponse.getStatusCode(), 200);
     }
 
+    @Test
+    public void Newtaponboarding()throws IOException{
+     String parfaitJson = PayloadUtils.buildNewtapCashMigrationJson();
+     Response newtapcreateresponse = Service.newtapcashonboarding(parfaitJson);
+     newtapcreateresponse.then().log().all();
+     Assert.assertEquals(newtapcreateresponse.getStatusCode(),200);
+    }
 
 }

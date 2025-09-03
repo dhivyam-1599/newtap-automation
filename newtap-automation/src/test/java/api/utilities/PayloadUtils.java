@@ -59,6 +59,17 @@ public class PayloadUtils {
                 .replace("{{search_result_location}}", presigned.get("search_result_location"))
                 .replace("{{download_result_location}}", presigned.get("download_result_location"));
     }
+    public static String buildNewtapCashMigrationJson() throws IOException{
+        String json =new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationnewtap.json")));
+        Map<String, String> presigned = PreSignedHelper();
+
+        return json
+                .replace("{{client_ref_id}}", referenceID)
+                .replace("{{image_url}}", presigned.get("image_url"))
+                .replace("{{selfie_image}}", presigned.get("selfie_image"))
+                .replace("{{search_result_location}}", presigned.get("search_result_location"))
+                .replace("{{download_result_location}}", presigned.get("download_result_location"));
+    }
 
 
     public static String generateReferenceId() {

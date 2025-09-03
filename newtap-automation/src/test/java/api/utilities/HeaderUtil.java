@@ -39,6 +39,13 @@ public class HeaderUtil {
                 headers.put("X-LSP-User-Id", reader.getProperty("cash-LSP-User-Id"));
                 break;
 
+            case "NEWTAP100%":
+                headers.put("X-Tenant", reader.getProperty("newtap-Tenant"));
+                headers.put("X-LSP", "CASH");
+                headers.put("X-Lob", "CASH");
+                headers.put("X-LSP-User-Id", reader.getProperty("newtap-LSP-User-Id"));
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown service type: " + serviceType);
         }

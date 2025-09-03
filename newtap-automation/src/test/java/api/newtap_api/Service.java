@@ -59,4 +59,27 @@ public class Service {
                .extract().response();
    }
 
+    public static Response newtapcashonboarding(String payload) {
+        return HeaderUtil.getHeaders("NEWTAP100%")
+                .body(payload)
+                .when()
+                .log().all()
+                .post(Endpoints.cash_create_borrower_url)
+                .then()
+                .extract().response();
+    }
+    public static Response cashvcip (String payload) {
+        return (Response) given()
+                .contentType("application/json")
+                .header("X-APP-TOKEN","heracles")
+                .header("X-Request-Id","896555441")
+                .header("X-User-Id","a871b36c-37cf-46fc-8c0c-672602da7e60")
+                .when()
+                .log().all()
+                .get(Endpoints.cash_vcip_url)
+                .then()
+                .extract()
+                .response();
+    }
+
 }
