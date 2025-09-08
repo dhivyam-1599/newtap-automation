@@ -16,7 +16,6 @@ public class PayloadUtils {
     public static String las_crn;
     public static String createJson;
     public static String updateJson;
-    public static String cashcreateJson;
 
 
     public static Map<String, String> JsonHelper() throws IOException {
@@ -27,13 +26,13 @@ public class PayloadUtils {
         createJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         updateJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/updateborrower.json")));
 
-//         Replace base references
+
         createJson = createJson.replace("{{reference_id}}", referenceID);
         updateJson = updateJson
                 .replace("{{external_reference_id}}", las_appform)
                 .replace("{{crn}}", las_crn)
                 .replace("{{reference_id}}", referenceID); // This is also required in updateBorrower body
-        // Inject pre-signed URLs
+
         Map<String, String> presignedPaths = PreSignedHelper();
 
         updateJson = updateJson

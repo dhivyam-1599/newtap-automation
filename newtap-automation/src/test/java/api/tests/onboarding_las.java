@@ -95,7 +95,7 @@ public class onboarding_las {
                 new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
         );
         ObjectNode panDetail = (ObjectNode) root.path("data").path("pan_detail");
-        // Apply invalid values
+
         panDetail.put("pan_number", panNumber);
         panDetail.put("pan_name", panName);
         String invalidJson = mapper.writeValueAsString(root);
@@ -114,7 +114,7 @@ public class onboarding_las {
                 new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
         );
         ObjectNode UserDetail = (ObjectNode) root.path("data").path("user_detail");
-        // Apply invalid values
+
         UserDetail.put("user_id", userID);
         UserDetail.put("phone_no", PhnNo);
         UserDetail.put("user_name", UserName);
