@@ -1,5 +1,6 @@
 {
   "client_ref_id": "{{client_ref_id}}",
+  "session_id": "{{client_ref_id}}",
   "pan_detail": {
     "pan_number": "FXTPD9130B",
     "pan_name": "Dhivya M",
@@ -123,6 +124,22 @@
       0
     ]
   },
+  "bureau_detail": {
+    "dob": "1995-11-22",
+    "aggregated_score": 813,
+    "customer_name": [
+      "AutomationFirstName AutomationLastName",
+      "AutomationFirstName AutomationLastName",
+      "AutomationFirstName AutomationLastName"
+    ],
+    "credit_scores": [
+      {
+        "provider": "crif",
+        "score": 820,
+        "last_queried_time": "2022-11-16 19:00:00"
+      }
+    ]
+  },
   "risk_detail": {
     "policy_name": "pl_bau_v3",
     "user_data": {
@@ -197,7 +214,7 @@
     "bm_decile": 0
   },
   "vcip_detail": {
-    "vcip_enabled": false
+    "vcip_enabled": true
   },
   "economic_profile": {
     "occupation": "Salaried",

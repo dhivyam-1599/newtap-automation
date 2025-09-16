@@ -31,7 +31,7 @@ public class PayloadUtils {
         updateJson = updateJson
                 .replace("{{external_reference_id}}", las_appform)
                 .replace("{{crn}}", las_crn)
-                .replace("{{reference_id}}", referenceID); // This is also required in updateBorrower body
+                .replace("{{reference_id}}", referenceID);
 
         Map<String, String> presignedPaths = PreSignedHelper();
 
@@ -50,13 +50,17 @@ public class PayloadUtils {
     public static String buildCashMigrationJson() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationcolending.json")));
         Map<String, String> presigned = PreSignedHelper();
+        String tenant = ConfigUtils.getTenant();
+        String productId = ConfigUtils.getProductId(tenant);
 
         return json
                 .replace("{{client_ref_id}}", referenceID)
+                .replace("{{session_id}}",referenceID)
                 .replace("{{image_url}}", presigned.get("image_url"))
                 .replace("{{selfie_image}}", presigned.get("selfie_image"))
                 .replace("{{search_result_location}}", presigned.get("search_result_location"))
-                .replace("{{download_result_location}}", presigned.get("download_result_location"));
+                .replace("{{download_result_location}}", presigned.get("download_result_location"))
+                .replace("${PRODUCT_ID}", productId);
     }
     public static String buildNewtapCashMigrationJson() throws IOException{
         String json =new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationnewtap.json")));
@@ -64,6 +68,7 @@ public class PayloadUtils {
 
         return json
                 .replace("{{client_ref_id}}", referenceID)
+                .replace("{{session_id}}",referenceID)
                 .replace("{{image_url}}", presigned.get("image_url"))
                 .replace("{{selfie_image}}", presigned.get("selfie_image"))
                 .replace("{{search_result_location}}", presigned.get("search_result_location"))

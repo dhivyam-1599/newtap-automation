@@ -1,5 +1,6 @@
 package api.utilities;
 
+import api.newtap_api.Endpoints;
 import api.utilities.database.PropertyFileReader;
 import io.restassured.specification.RequestSpecification;
 
@@ -20,6 +21,17 @@ public class HeaderUtil {
             throw new RuntimeException("Unable to load config.properties", e);
         }
     }
+    public static String getEndpoint(String serviceType) {
+        switch (serviceType.toUpperCase()) {
+            case "CASH":
+                return Endpoints.cash_create_borrower_status_url;
+            case "NEWTAP100%":
+                return Endpoints.newtap_create_borrower_status_url;
+            default:
+                throw new IllegalArgumentException("Unknown service type: " + serviceType);
+        }
+    }
+
 
     public static RequestSpecification getHeaders(String serviceType) {
         Map<String, String> headers = new HashMap<>();

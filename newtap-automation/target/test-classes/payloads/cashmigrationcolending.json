@@ -1,5 +1,6 @@
 {
   "client_ref_id": "{{client_ref_id}}",
+  "session_id": "{{client_ref_id}}",
   "pan_detail": {
     "pan_number": "FXTPD9130B",
     "pan_name": "Dhivya M",
@@ -103,7 +104,7 @@
   },
   "offer_detail": {
     "credit_limit": "230000.0",
-    "product_id": "CRE-TL-CRED-YBL-CLM-0003",
+    "product_id": "${PRODUCT_ID}",
     "date_of_credit_limit": [
       2024,
       2,
@@ -119,6 +120,22 @@
       1,
       0,
       0
+    ]
+  },
+  "bureau_detail": {
+    "dob": "1995-11-22",
+    "aggregated_score": 813,
+    "customer_name": [
+      "AutomationFirstName AutomationLastName",
+      "AutomationFirstName AutomationLastName",
+      "AutomationFirstName AutomationLastName"
+    ],
+    "credit_scores": [
+      {
+        "provider": "crif",
+        "score": 820,
+        "last_queried_time": "2022-11-16 19:00:00"
+      }
     ]
   },
   "risk_detail": {
@@ -151,7 +168,7 @@
     "bm_decile": -9999
   },
   "vcip_detail": {
-    "vcip_enabled": false
+    "vcip_enabled": true
   },
   "economic_profile": {
     "occupation": "Salaried",
