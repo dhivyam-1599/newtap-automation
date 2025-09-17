@@ -2,29 +2,29 @@
   "client_ref_id": "{{client_ref_id}}",
   "session_id": "{{client_ref_id}}",
   "pan_detail": {
-    "pan_number": "FXTPD9130B",
-    "pan_name": "Dhivya M",
-    "dob": "1999-05-01"
+    "pan_number": "DOAPG0413J",
+    "pan_name": "Shubham Ghurde",
+    "dob": "1996-09-02"
   },
   "user_detail": {
-    "user_id": "24f05d9a-07d7-448a-9ce9-3fe2db2022c2",
-    "phone_no": "9092366584",
-    "user_name": "Ms Dhivya",
-    "user_email": "dhivyam1599@gmail.com"
+    "user_id": "c8e9bd09-7d3b-41e1-be87-808df57529a7",
+    "phone_no": "8007070027",
+    "user_name": "Mr Shubham",
+    "user_email": "shubhamg@gmail.com"
   },
   "kyc_detail": {
     "type": "CKYC",
     "data": {
-      "name": "Dhivya",
+      "name": "Shubham",
       "segregated_name": {
-        "salutation": "MS",
-        "first_name": "Dhivya",
+        "salutation": "MR",
+        "first_name": "Shubham",
         "middle_name": "",
-        "last_name": "M"
+        "last_name": "Ghurde"
       },
-      "father_name": "Mr MANIVEL S",
-      "mother_name": "Mrs TAMIL SELVI M",
-      "dob": "1999-05-01",
+      "father_name": "Mr NEHRU PRASAD GHURDE",
+      "mother_name": "Mrs MANJULATA GHURDE",
+      "dob": "1996-09-02",
       "gender": "M",
       "image_url":"{{image_url}}",
       "segregated_address": {
@@ -84,7 +84,7 @@
   "bank_account_verification_detail": {
     "bank_account_number": "1705993629261",
     "ifsc_code": "HDFC0000514",
-    "customer_name": "Dhivya M",
+    "customer_name": "Shubham Ghurde",
     "bank_account_name": "Hdfc Bank",
     "bank_txn_id": "",
     "penny_drop_date": "2025-12-23"
