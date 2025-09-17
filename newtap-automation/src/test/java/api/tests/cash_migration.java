@@ -1,5 +1,4 @@
 package api.tests;
-
 import api.newtap_api.Service;
 import api.utilities.PayloadUtils;
 import io.restassured.response.Response;
@@ -9,82 +8,99 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
-
 import static org.awaitility.Awaitility.await;
 
 public class cash_migration {
 
     private static Response finalStatusResponse;
 
-    public Response ColendingCreateHelper() throws IOException {
-        String cashJson = PayloadUtils.buildCashMigrationJson();
-        Response cashcreateresponse = Service.cashonboarding(cashJson);
-        cashcreateresponse.then().log().all();
-        Assert.assertEquals(cashcreateresponse.getStatusCode(), 200);
-        return cashcreateresponse;
-    }
-    public Response ParfaitCreateHelper()throws IOException{
-        String parfaitJson = PayloadUtils.buildNewtapCashMigrationJson();
-        Response newtapcreateresponse = Service.newtapcashonboarding(parfaitJson);
-        newtapcreateresponse.then().log().all();
-        Assert.assertEquals(newtapcreateresponse.getStatusCode(),200);
-        return newtapcreateresponse;
+    private Response createBorrower(String serviceType) throws IOException {
+        String payload = serviceType.equals("CASH")
+                ? PayloadUtils.buildCashMigrationJson()
+                : PayloadUtils.buildNewtapCashMigrationJson();
+
+        Response response = serviceType.equals("CASH")
+                ? Service.cashonboarding(payload)
+                : Service.newtapcashonboarding(payload);
+
+        response.then().log().all();
+        Assert.assertEquals(response.getStatusCode(), 200);
+        return response;
     }
 
-    @Test
-    public void ColendingCashCreateBorrower() throws IOException {
-        Response cashBorrowerResponse = ColendingCreateHelper();
-        String reference_id = cashBorrowerResponse.jsonPath().getString("data.id");
-        System.out.println("Workflow_ID : "+reference_id);
+    private void waitForStatus(String serviceType, String referenceId, String expectedStatus, int maxMinutes) {
         await()
-                .atMost(2, TimeUnit.MINUTES)
+                .atMost(maxMinutes, TimeUnit.MINUTES)
                 .pollInterval(10, TimeUnit.SECONDS)
                 .until(() -> {
-                    Response pollResponse = Service.cashcreateborrowerstatus("CASH",reference_id);
+                    Response pollResponse = Service.cashcreateborrowerstatus(serviceType, referenceId);
                     String status = pollResponse.jsonPath().getString("data.status");
                     System.out.println("Current status: " + status);
-                    return "APPROVED".equals(status);
+                    return expectedStatus.equals(status);
                 });
-        finalStatusResponse = Service.cashcreateborrowerstatus("CASH",reference_id);
+        finalStatusResponse = Service.cashcreateborrowerstatus(serviceType, referenceId);
         finalStatusResponse.then().log().all();
         Assert.assertEquals(finalStatusResponse.getStatusCode(), 200);
     }
 
     @Test
-    public void NewtapCashCreateBorrower() throws IOException {
-        Response newtapBorrowerResponse = ParfaitCreateHelper();
-        String reference_id = newtapBorrowerResponse.jsonPath().getString("data.id");
-        System.out.println("Workflow_ID : "+reference_id);
-        await()
-                .atMost(2, TimeUnit.MINUTES)
-                .pollInterval(10, TimeUnit.SECONDS)
-                .until(() -> {
-                    Response pollResponse = Service.cashcreateborrowerstatus("NEWTAP100%",reference_id);
-                    String status = pollResponse.jsonPath().getString("data.status");
-                    System.out.println("Current status: " + status);
-                    return "APPROVED".equals(status);
-                });
-        finalStatusResponse = Service.cashcreateborrowerstatus("NEWTAP100%",reference_id);
-        finalStatusResponse.then().log().all();
-        Assert.assertEquals(finalStatusResponse.getStatusCode(), 200);
+    public void ColendingCashNonVcip() throws IOException {
+        Response response = createBorrower("CASH");
+        String referenceId = response.jsonPath().getString("data.id");
+        System.out.println("Workflow_ID : " + referenceId);
+        waitForStatus("CASH", referenceId, "APPROVED", 2);
     }
 
-    @Test(dependsOnMethods = "ColendingCashCreateBorrower")
-    public void ColendingVCIP() throws IOException {
+    @Test
+    public void NewtapCashNonVcip() throws IOException {
+        Response response = createBorrower("NEWTAP100%");
+        String referenceId = response.jsonPath().getString("data.id");
+        System.out.println("Workflow_ID : " + referenceId);
+        waitForStatus("NEWTAP100%", referenceId, "APPROVED", 2);
+    }
+
+    @Test
+    public void ColendingCashVcip() throws IOException {
+        String payload = PayloadUtils.buildCashMigrationJson();
+        payload = payload.replace("\"vcip_enabled\": false", "\"vcip_enabled\": true");
+        Response response = Service.cashonboarding(payload);
+        response.then().log().all();
+        Assert.assertEquals(response.getStatusCode(), 200);
+        String referenceId = response.jsonPath().getString("data.id");
+        System.out.println("Workflow_ID : " + referenceId);
+        waitForStatus("CASH", referenceId, "IN_PROGRESS", 2);
         String userId = finalStatusResponse.jsonPath().getString("data.user_id");
         String formId = finalStatusResponse.jsonPath().getString("data.form_id");
         System.out.println("UserId: " + userId + " | FormId: " + formId);
-
-        String vcipjson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/vcip.json")));
-        vcipjson = vcipjson.replace("{{app_form_id}}", formId);
-        Response vcipResponse = Service.validatevcip(userId, vcipjson);
+        String vcipJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/vcip.json")))
+                .replace("{{app_form_id}}", formId);
+        Response vcipResponse = Service.validatevcip(userId, vcipJson);
         vcipResponse.then().log().all();
         Assert.assertEquals(vcipResponse.getStatusCode(), 200);
         Assert.assertTrue(vcipResponse.jsonPath().getBoolean("success"),
                 "Expected VCIP validation success=true but got false");
     }
 
+    @Test
+    public void NewtapCashVcip() throws IOException {
+        String payload = PayloadUtils.buildNewtapCashMigrationJson();
+        payload = payload.replace("\"vcip_enabled\": false", "\"vcip_enabled\": true");
+        Response response = Service.newtapcashonboarding(payload);
+        response.then().log().all();
+        Assert.assertEquals(response.getStatusCode(), 200);
+        String referenceId = response.jsonPath().getString("data.id");
+        System.out.println("Workflow_ID : " + referenceId);
+        waitForStatus("NEWTAP100%", referenceId, "IN_PROGRESS", 2);
+        String userId = finalStatusResponse.jsonPath().getString("data.user_id");
+        String formId = finalStatusResponse.jsonPath().getString("data.form_id");
+        System.out.println("UserId: " + userId + " | FormId: " + formId);
+        String vcipJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/vcip.json")))
+                .replace("{{app_form_id}}", formId);
+        Response vcipResponse = Service.validatevcip(userId, vcipJson);
+        vcipResponse.then().log().all();
+        Assert.assertEquals(vcipResponse.getStatusCode(), 200);
+        Assert.assertTrue(vcipResponse.jsonPath().getBoolean("success"),
+                "Expected VCIP validation success=true but got false");
+    }
 
 }
-
-
