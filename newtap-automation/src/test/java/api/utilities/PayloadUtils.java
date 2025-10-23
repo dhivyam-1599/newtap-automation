@@ -1,5 +1,7 @@
 package api.utilities;
 
+import api.utilities.database.DbQuery;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,18 +9,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static api.tests.onboarding_las.GetPresignedUrl;
+import static api.tests.OnboardingLas.getPresignedUrl;
 
 
 public class PayloadUtils {
     public static String referenceID = generateReferenceId();
     public static String las_appform;
     public static String las_crn;
+    public static String requestID;
     public static String createJson;
     public static String updateJson;
 
 
-    public static Map<String, String> JsonHelper() throws IOException {
+    public static Map<String, String> jsonHelper() throws IOException {
         if (las_appform == null || las_crn == null) {
             throw new IllegalStateException("las_appform or las_crn is null. Make sure to call createborrower before JsonHelper()");
         }
@@ -33,7 +36,7 @@ public class PayloadUtils {
                 .replace("{{crn}}", las_crn)
                 .replace("{{reference_id}}", referenceID);
 
-        Map<String, String> presignedPaths = PreSignedHelper();
+        Map<String, String> presignedPaths = preSignedHelper();
 
         updateJson = updateJson
                 .replace("{{image_url}}",presignedPaths.get("image_url"))
@@ -47,9 +50,27 @@ public class PayloadUtils {
         result.put("updateJson", updateJson);
         return result;
     }
+
+//    public static String creditUpdateJson(String crn) throws IOException {
+//        // Read JSON template
+//        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/creditreport.json")));
+//
+//        // Fetch request ID from DB using crn
+//        DbQuery dbQuery = new DbQuery();
+//        String requestID = dbQuery.getRequestId(crn);
+//
+//        if (requestID == null) {
+//            throw new RuntimeException("Request ID not found for CRN: " + crn);
+//        }
+//
+//        // Replace placeholders
+//        return json.replace("{{crn}}", crn)
+//                .replace("{{requestid}}", requestID);
+//    }
+
     public static String buildCashMigrationJson() throws IOException {
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationcolending.json")));
-        Map<String, String> presigned = PreSignedHelper();
+        Map<String, String> presigned = preSignedHelper();
         String tenant = ConfigUtils.getTenant();
         String productId = ConfigUtils.getProductId(tenant);
 
@@ -64,7 +85,7 @@ public class PayloadUtils {
     }
     public static String buildNewtapCashMigrationJson() throws IOException{
         String json =new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationnewtap.json")));
-        Map<String, String> presigned = PreSignedHelper();
+        Map<String, String> presigned = preSignedHelper();
 
         return json
                 .replace("{{client_ref_id}}", referenceID)
@@ -80,16 +101,16 @@ public class PayloadUtils {
         return "CRE_LAS_UAT_" + UUID.randomUUID().toString().replace("-", "").substring(0, 6);
     }
 
-    public static Map<String, String> PreSignedHelper() throws IOException {
+    public static Map<String, String> preSignedHelper() throws IOException {
         String imageObjectPath = "kyc_details/ckyc/images/2025/07/31/04/63e7b3d4-6203-451c-a09e-fb45be1b7f5b.jpeg";
         String selfieObjectPath = "kyc_details/ckyc/images/2025/07/31/04/63e7b3d4-6203-451c-a09e-fb45be1b7f5b.jpeg";
         String searchObjectPath = "kyc_details/ckyc/search_results/2025/07/31/04/63e7b3d4-6203-451c-a09e-fb45be1b7f5b.json";
         String downloadObjectPath = "kyc_details/ckyc/download_results/2025/08/19/12/29e2a31c-f157-471d-a586-72a88f6f2c04.json";
 
-        String image_url = GetPresignedUrl(imageObjectPath);
-        String selfie_image = GetPresignedUrl(selfieObjectPath);
-        String search_result_location = GetPresignedUrl(searchObjectPath);
-        String download_result_location = GetPresignedUrl(downloadObjectPath);
+        String image_url = getPresignedUrl(imageObjectPath);
+        String selfie_image = getPresignedUrl(selfieObjectPath);
+        String search_result_location = getPresignedUrl(searchObjectPath);
+        String download_result_location = getPresignedUrl(downloadObjectPath);
 
         System.out.println("image_url: " + image_url);
         System.out.println("selfie_image: " + selfie_image);

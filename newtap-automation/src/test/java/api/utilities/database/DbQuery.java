@@ -1,16 +1,18 @@
 package api.utilities.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
-
-public class DBquery {
+public class DbQuery {
 
 //    String Host = "stage-master-db.stg.dreamplug.net";
 //    String database = "bureau_service";
 
 
-    public String getuserdetails(String las_crn){
+    public String getUserDetails(String las_crn){
 
         String query = "SET @new_request_id = UUID();\n" +
                 "\n" +
@@ -26,7 +28,8 @@ public class DBquery {
                 "\n" +
                 "SET @new_tenant_id = 'NB_PARF_000';\n" +
                 "\n" +
-                "SET @new_partner_id = 'CRED';\n" +
+                "SET @new_partner_id = 'CRED" +
+                "';\n" +
                 "\n" +
                 "SET @configuration_id = '69e09168-ea41-40b2-b02f-99e26c5b8dd3';\n" +
                 "\n" +
@@ -72,7 +75,7 @@ public class DBquery {
                 "    `updated_by`\n" +
                 "FROM `bureau_requests`\n" +
                 "WHERE\n" +
-                "    `account_holder_reference_id` = '46316a51-53f2-4b90-ae2c-8af0f48b09db'\n" +
+                "    `account_holder_reference_id` = '50e887e9-5b00-43a0-8727-e474c3d1b2e9'\n" +
                 "    AND `status` = 'COMPLETED';\n" +
                 "\n" +
                 "-- Step 2: Duplicate records\n" +
@@ -112,7 +115,7 @@ public class DBquery {
                 "    `version`\n" +
                 "FROM `records`\n" +
                 "WHERE\n" +
-                "    `account_holder_reference_id` = '46316a51-53f2-4b90-ae2c-8af0f48b09db';\n" +
+                "    `account_holder_reference_id` = '50e887e9-5b00-43a0-8727-e474c3d1b2e9';\n" +
                 "\n" +
                 "-- Step 3 [CRIF]: Duplicate documents(2 document entries - json & xml file)\n" +
                 "INSERT INTO\n" +
@@ -149,7 +152,7 @@ public class DBquery {
                 "    `file_name`\n" +
                 "FROM `documents`\n" +
                 "WHERE\n" +
-                "    `account_holder_reference_id` = '46316a51-53f2-4b90-ae2c-8af0f48b09db'\n" +
+                "    `account_holder_reference_id` = '50e887e9-5b00-43a0-8727-e474c3d1b2e9'\n" +
                 "    AND `file_name` = 'crif_raw_report.xml'\n" +
                 "LIMIT 1;\n" +
                 "\n" +
@@ -187,7 +190,7 @@ public class DBquery {
                 "    `file_name`\n" +
                 "FROM `documents`\n" +
                 "WHERE\n" +
-                "    `account_holder_reference_id` = '46316a51-53f2-4b90-ae2c-8af0f48b09db'\n" +
+                "    `account_holder_reference_id` = '50e887e9-5b00-43a0-8727-e474c3d1b2e9'\n" +
                 "    AND `file_name` = 'crif_report_formatted.json'\n" +
                 "LIMIT 1;\n" +
                 "\n" +
@@ -226,7 +229,7 @@ public class DBquery {
                 "    `file_name`\n" +
                 "FROM `documents`\n" +
                 "WHERE\n" +
-                "    `account_holder_reference_id` = '46316a51-53f2-4b90-ae2c-8af0f48b09db'\n" +
+                "    `account_holder_reference_id` = '50e887e9-5b00-43a0-8727-e474c3d1b2e9'\n" +
                 "    AND `file_name` = 'experian_raw_report.xml'\n" +
                 "LIMIT 1;\n" +
                 "\n" +
@@ -264,13 +267,42 @@ public class DBquery {
                 "    `file_name`\n" +
                 "FROM `documents`\n" +
                 "WHERE\n" +
-                "    `account_holder_reference_id` = '46316a51-53f2-4b90-ae2c-8af0f48b09db'\n" +
+                "    `account_holder_reference_id` = '50e887e9-5b00-43a0-8727-e474c3d1b2e9'\n" +
                 "    AND `file_name` = 'experian_report_formatted.json'\n" +
                 "LIMIT 1;";
 
-        ResultSet rs = DBhost.runQuery(query);
+        ResultSet rs = DbHost.runQuery(query);
 
         return query;
     }
+    public String getRequestId(String crn) {
+        String requestID = null;
+        String query = "SELECT request_id FROM bureau_requests WHERE account_holder_reference_id = ?";
+
+        System.out.println("Looking for request_id with account_holder_reference_id: " + crn);
+
+        try (Connection conn = DbHost.connectionToDB("stage-master-db.stg.dreamplug.net", "bureau_service");
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, crn);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                requestID = rs.getString("request_id");
+                System.out.println("Found request_id: " + requestID);
+            } else {
+                System.out.println("No request_id found for account_holder_reference_id: " + crn);
+            }
+
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return requestID;
+    }
 
 }
+
+

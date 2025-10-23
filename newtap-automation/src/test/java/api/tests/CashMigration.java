@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 import static org.awaitility.Awaitility.await;
 
-public class cash_migration {
+public class CashMigration {
 
     private static Response finalStatusResponse;
 
@@ -20,8 +20,8 @@ public class cash_migration {
                 : PayloadUtils.buildNewtapCashMigrationJson();
 
         Response response = serviceType.equals("CASH")
-                ? Service.cashonboarding(payload)
-                : Service.newtapcashonboarding(payload);
+                ? Service.cashOnboarding(payload)
+                : Service.newtapCashOnboarding(payload);
 
         response.then().log().all();
         Assert.assertEquals(response.getStatusCode(), 200);
@@ -33,12 +33,12 @@ public class cash_migration {
                 .atMost(maxMinutes, TimeUnit.MINUTES)
                 .pollInterval(10, TimeUnit.SECONDS)
                 .until(() -> {
-                    Response pollResponse = Service.cashcreateborrowerstatus(serviceType, referenceId);
+                    Response pollResponse = Service.cashCreateBorrowerStatus(serviceType, referenceId);
                     String status = pollResponse.jsonPath().getString("data.status");
                     System.out.println("Current status: " + status);
                     return expectedStatus.equals(status);
                 });
-        finalStatusResponse = Service.cashcreateborrowerstatus(serviceType, referenceId);
+        finalStatusResponse = Service.cashCreateBorrowerStatus(serviceType, referenceId);
         finalStatusResponse.then().log().all();
         Assert.assertEquals(finalStatusResponse.getStatusCode(), 200);
     }
@@ -63,7 +63,7 @@ public class cash_migration {
     public void ColendingCashVcip() throws IOException {
         String payload = PayloadUtils.buildCashMigrationJson();
         payload = payload.replace("\"vcip_enabled\": false", "\"vcip_enabled\": true");
-        Response response = Service.cashonboarding(payload);
+        Response response = Service.cashOnboarding(payload);
         response.then().log().all();
         Assert.assertEquals(response.getStatusCode(), 200);
         String referenceId = response.jsonPath().getString("data.id");
@@ -74,7 +74,7 @@ public class cash_migration {
         System.out.println("UserId: " + userId + " | FormId: " + formId);
         String vcipJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/vcip.json")))
                 .replace("{{app_form_id}}", formId);
-        Response vcipResponse = Service.validatevcip(userId, vcipJson);
+        Response vcipResponse = Service.validateVcip(userId, vcipJson);
         vcipResponse.then().log().all();
         Assert.assertEquals(vcipResponse.getStatusCode(), 200);
         Assert.assertTrue(vcipResponse.jsonPath().getBoolean("success"),
@@ -85,7 +85,7 @@ public class cash_migration {
     public void NewtapCashVcip() throws IOException {
         String payload = PayloadUtils.buildNewtapCashMigrationJson();
         payload = payload.replace("\"vcip_enabled\": false", "\"vcip_enabled\": true");
-        Response response = Service.newtapcashonboarding(payload);
+        Response response = Service.newtapCashOnboarding(payload);
         response.then().log().all();
         Assert.assertEquals(response.getStatusCode(), 200);
         String referenceId = response.jsonPath().getString("data.id");
@@ -96,7 +96,7 @@ public class cash_migration {
         System.out.println("UserId: " + userId + " | FormId: " + formId);
         String vcipJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/vcip.json")))
                 .replace("{{app_form_id}}", formId);
-        Response vcipResponse = Service.validatevcip(userId, vcipJson);
+        Response vcipResponse = Service.validateVcip(userId, vcipJson);
         vcipResponse.then().log().all();
         Assert.assertEquals(vcipResponse.getStatusCode(), 200);
         Assert.assertTrue(vcipResponse.jsonPath().getBoolean("success"),

@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.sql.*;
 
-public class DBhost {
+public class DbHost {
     static PropertyFileReader property;
     public static Connection connection;
     public static Statement statement;
-    private static final Logger log = LoggerFactory.getLogger(DBhost.class);
+    private static final Logger log = LoggerFactory.getLogger(DbHost.class);
     static{
         try{
             property = new PropertyFileReader("config.properties");

@@ -2,9 +2,9 @@ package api.utilities.database;
 
 import java.sql.ResultSet;
 
-public class CashDbquery {
+public class CashDbQuery {
 
-    public static String getcashbureaudetails(String crn){
+    public static String getCashBureauDetails(String crn){
 
         String query = "SET @new_request_id = UUID();\n" +
                 "\n" +
@@ -262,7 +262,7 @@ public class CashDbquery {
                 "    AND `file_name` = 'experian_report_formatted.json'\n" +
                 "LIMIT 1;";
 
-        ResultSet rs = DBhost.runQuery(query);
+        ResultSet rs = DbHost.runQuery(query);
 
         return query;
     }

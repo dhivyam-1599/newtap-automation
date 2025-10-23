@@ -1,6 +1,6 @@
 package api.utilities;
 
-import api.newtap_api.Endpoints;
+import api.newtap_api.EndPoints;
 import api.utilities.database.PropertyFileReader;
 import io.restassured.specification.RequestSpecification;
 
@@ -24,9 +24,9 @@ public class HeaderUtil {
     public static String getEndpoint(String serviceType) {
         switch (serviceType.toUpperCase()) {
             case "CASH":
-                return Endpoints.cash_create_borrower_status_url;
+                return EndPoints.CASH_CREATE_BORROWER_STATUS_URL;
             case "NEWTAP100%":
-                return Endpoints.newtap_create_borrower_status_url;
+                return EndPoints.NEWTAP_CREATE_BORROWER_STATUS_URL;
             default:
                 throw new IllegalArgumentException("Unknown service type: " + serviceType);
         }
