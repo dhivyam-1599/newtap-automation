@@ -10,10 +10,10 @@ public class TestDataProviders {
         };
     }
 
-    @DataProvider(name = "invalidPANAadhar")
+    @DataProvider(name = "invalidPANnumberPANname")
     public Object[][] invalidPANAadhar() {
         return new Object[][]{
-                {"mwSwGfJkKnlyjkLnMnvjtQ==","DHIVYA M","Invalid PAN Aadhar Linkage"}
+                {"d0X4iChyiz/bISw6GzxHWg==","SARANYA M","Invalid PAN Aadhar Linkage"}
         };
     }
     @DataProvider(name = "invalidUserdetails")
@@ -22,5 +22,10 @@ public class TestDataProviders {
                 {"bac0034f-4141-47cf-aea2-4367f3857","9092366584","DHIVYA M","dhivyam1599@gmail.com","Invalid User Details"}
         };
     }
+    @DataProvider(name ="Invalidpandetails")
+    public Object[][] invalidpandetails() {
+        return new Object[][]{
+                {"ABCDE12345", "ARUNA M", "Invalid Pan Details"}
+        };
 
-}
+}}

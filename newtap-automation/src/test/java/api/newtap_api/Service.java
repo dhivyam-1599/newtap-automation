@@ -56,7 +56,7 @@ public class Service {
                 .body(payload)
                 .when()
                 .log().all()
-                .post(EndPoints.CASH_CREATE_BORROWER_STATUS_URL)
+                .post(EndPoints.CASH_CREATE_BORROWER_URL)
                 .then()
                 .extract().response();
     }
@@ -65,7 +65,7 @@ public class Service {
                 .body(payload)
                 .when()
                 .log().all()
-                .post(EndPoints.CASH_CREATE_BORROWER_STATUS_URL)
+                .post(EndPoints.CASH_CREATE_BORROWER_URL)
                 .then()
                 .extract().response();
     }
