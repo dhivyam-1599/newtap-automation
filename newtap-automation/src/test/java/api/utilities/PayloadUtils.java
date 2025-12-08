@@ -1,7 +1,4 @@
 package api.utilities;
-
-import api.utilities.database.DbQuery;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,11 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static api.tests.OnboardingLas.getPresignedUrl;
+import static api.helpers.OnboardingHelper.getPresignedUrl;
+
 
 
 public class PayloadUtils {
-    public static String referenceID = generateReferenceId();
+    public  String referenceID = generateReferenceId();
     public static String las_appform;
     public static String las_crn;
     public static String requestID;
@@ -22,6 +20,7 @@ public class PayloadUtils {
 
 
     public static Map<String, String> jsonHelper() throws IOException {
+        String referenceID = generateReferenceId();
         if (las_appform == null || las_crn == null) {
             throw new IllegalStateException("las_appform or las_crn is null. Make sure to call createborrower before JsonHelper()");
         }
@@ -69,6 +68,7 @@ public class PayloadUtils {
 //    }
 
     public static String buildCashMigrationJson() throws IOException {
+        String referenceID = generateReferenceId();
         String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationcolending.json")));
         Map<String, String> presigned = preSignedHelper();
         String tenant = ConfigUtils.getTenant();
@@ -84,6 +84,7 @@ public class PayloadUtils {
                 .replace("${PRODUCT_ID}", productId);
     }
     public static String buildNewtapCashMigrationJson() throws IOException{
+        String referenceID = generateReferenceId();
         String json =new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationnewtap.json")));
         Map<String, String> presigned = preSignedHelper();
 

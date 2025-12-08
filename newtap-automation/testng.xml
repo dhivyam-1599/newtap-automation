@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Cash Migration Automation Suite" parallel="none">
+    <test name="CashMigrationTests">
+        <classes>
+            <!-- Your main test class -->
+            <class name="api.tests.CashMigration"/>
+
+            <!-- Add other test classes here if needed -->
+            <!-- <class name="api.tests.AnotherTestClass"/> -->
+        </classes>
+    </test>
+</suite>

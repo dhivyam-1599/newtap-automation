@@ -13,6 +13,6 @@ public class EndPoints {
     public static String NEWTAP_CREATE_BORROWER_STATUS_URL =CASH_CREATE_BORROWER_URL+"/status";
     public static String VALIDATE_VCIP_URL = CASH_BASE_URL_ONBOARDING+"/validate/VCIPStatus";
     public static String CREDIT_UPDATE_URL = BUREAU_CREDIT_UPDATE_URL+"/update";
-
+    public static String KYC_SEARCH_URL = CYNTRA_URL+"search";
 
 }

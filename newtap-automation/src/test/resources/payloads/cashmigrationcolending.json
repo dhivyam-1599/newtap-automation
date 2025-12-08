@@ -12,6 +12,48 @@
     "user_name": "Ms Dhivya",
     "user_email": "dhivyam1599@gmail.com"
   },
+  "consent_detail": [
+    {
+      "consent_status": "GIVEN",
+      "text_version": "v1",
+      "timestamp": "2025-06-13T10:25:43",
+      "mode": "electronic",
+      "channel": "mobile_app",
+      "purpose": "third_party_data_sharing_consent"
+    },
+    {
+      "consent_status": "GIVEN",
+      "text_version": "v1",
+      "timestamp": "2025-06-13T10:25:43",
+      "mode": "electronic",
+      "channel": "mobile_app",
+      "purpose": "kyc_consent"
+    },
+    {
+      "consent_status": "GIVEN",
+      "text_version": "v1",
+      "timestamp": "2025-06-13T10:25:43",
+      "mode": "electronic",
+      "channel": "mobile_app",
+      "purpose": "bureau_hard_pull_consent"
+    },
+    {
+      "consent_status": "GIVEN",
+      "text_version": "v1",
+      "timestamp": "2025-06-13T10:25:43",
+      "mode": "electronic",
+      "channel": "mobile_app",
+      "purpose": "lender_privacy_policy_consent"
+    },
+    {
+      "consent_status": "GIVEN",
+      "text_version": "v1",
+      "timestamp": "2025-06-13T10:25:43",
+      "mode": "electronic",
+      "channel": "mobile_app",
+      "purpose": "camera_mic_location_consent"
+    }
+  ],
   "kyc_detail": {
     "type": "CKYC",
     "data": {

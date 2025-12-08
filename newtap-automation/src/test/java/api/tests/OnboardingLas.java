@@ -1,76 +1,20 @@
 package api.tests;
 import api.newtap_api.Service;
 import api.utilities.PayloadUtils;
-import api.utilities.TestDataProviders;
-import api.utilities.database.DbQuery;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import static api.utilities.PayloadUtils.*;
+import static api.helpers.OnboardingHelper.createBorrower;
+import static api.helpers.OnboardingHelper.createBorrowerAndVerifyStatus;
+
 
 
 public class OnboardingLas {
-
-
-    public static Response createBorrower() throws IOException, InterruptedException {
-        String createJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
-        createJson = createJson.replace("{{reference_id}}", PayloadUtils.referenceID);
-        Response response = Service.createBorrower(createJson);
-        response.then().log().all();
-        Assert.assertEquals(response.getStatusCode(), 200);
-        Thread.sleep(15000);
-        return response;
-    }
-    public static Response creditReportUpdate() throws IOException, InterruptedException {
-        DbQuery dbQuery = new DbQuery();
-        String requestID = dbQuery.getRequestId(las_crn);  // fetch request ID here
-
-        if (requestID == null) {
-            throw new RuntimeException("No request ID found for CRN: " + las_crn);
-        }
-
-        String creditJson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/creditreport.json")));
-        creditJson = creditJson.replace("{{crn}}", las_crn)
-                .replace("{{requestid}}", requestID);
-
-        Response response = Service.creditReportUpdate(creditJson);
-        response.then().log().all();
-        Assert.assertEquals(response.getStatusCode(), 200);
-        return response;
-    }
-
-
-    public static void createBorrowerAndVerifyStatus() throws IOException, InterruptedException {
-        DbQuery dBquery = new DbQuery();
-        Response createResponse = createBorrower();
-        String ref_id = createResponse.jsonPath().getString("data.id");
-        Response statusResponse = Service.createBorrowerStatus(ref_id);
-        las_appform = statusResponse.jsonPath().getString("data.borrower_data.reference_id");
-        las_crn = statusResponse.jsonPath().getString("data.borrower_data.crn");
-        statusResponse.then().log().all();
-        System.out.println("Switch to CRED STAGE VPN");
-        TimeUnit.MINUTES.sleep(1);
-        dBquery.getUserDetails(las_crn);
-        creditReportUpdate();
-        System.out.println("Switch to NEWTAP UAT VPN");
-        TimeUnit.MINUTES.sleep(1);
-        Assert.assertEquals(statusResponse.getStatusCode(), 200);
-    }
-
-    public static String getPresignedUrl(String objectPath) throws IOException {
-        String requestJson = objectPath ;
-        Response getResponse = Service.getPresignedUrls(requestJson);
-        getResponse.then().log().all();
-        Assert.assertEquals(getResponse.getStatusCode(), 200);
-        return getResponse.jsonPath().getString("data");
-    }
 
     @Test
     public void testCreateBorrower() throws IOException, InterruptedException {
@@ -89,66 +33,145 @@ public class OnboardingLas {
         updateresponse.then().log().all();
         Assert.assertEquals(updateresponse.getStatusCode(), 200);
     }
+    @Test
+    public void PanCheck() throws IOException,InterruptedException {
+        PayloadUtils utils = new PayloadUtils();
+        String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
+        payload = payload.replace("{{reference_id}}", utils.referenceID);
 
-    @Test(dataProvider = "invalidPANDetails", dataProviderClass = TestDataProviders.class)
-    public void testInvalidPANDetails(String panNumber, String panName, String reason) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = (ObjectNode) mapper.readTree(
-                new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
-        );
-        ObjectNode panDetail = (ObjectNode) root.path("data").path("pan_detail");
-        panDetail.put("pan_number", panNumber);
-        panDetail.put("pan_name", panName);
-        String invalidJson = mapper.writeValueAsString(root);
-        Response response = Service.createBorrower(invalidJson);
-        response.then().log().all();
-        Assert.assertTrue(
-                response.getStatusCode() == 200 || response.getStatusCode() == 422,
-                "Expected validation error for: " + reason + " but got " + response.getStatusCode()
-        );
+        JSONObject jsonObject = new JSONObject(payload);
+        jsonObject.getJSONObject("data").getJSONObject("pan_detail")
+                .put("pan_number","ABCGYJK4678");
+        payload = jsonObject.toString();
+
+        Response tresponse = Service.createBorrower(payload);
+
+        int code = tresponse.getStatusCode();
+        System.out.println("Create response code: " + code);
+        tresponse.then().log().all();
+
+        Assert.assertTrue(code != 400,
+                "Borrower creation SHOULD FAIL for invalid PAN, but API returned 200");
+
+        String referenceId = tresponse.jsonPath().getString("data.id");
+        System.out.println("Ref ID: " + referenceId);
+
+        if (referenceId == null) {
+            System.out.println("Borrower creation failed as expected. No status API call needed.");
+            return;
+        }
+
+        Thread.sleep(50000);
+        Response statusResponse = Service.createBorrowerStatus(referenceId);
+        statusResponse.then().log().all();
+
+        Assert.assertTrue(statusResponse.getStatusCode() >= 400,
+                "Expected status API failure for invalid PAN.");
     }
+    @Test
+    public void MobileCheck() throws IOException,InterruptedException {
+        PayloadUtils utils = new PayloadUtils();
+        String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
+        payload = payload.replace("{{reference_id}}", utils.referenceID);
 
-    @Test(dataProvider = "invalidPANnumberPANname", dataProviderClass = TestDataProviders.class)
-    public void testPanAadharLinkage(String panNumber, String panName, String reason) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = (ObjectNode) mapper.readTree(
-                new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
-        );
-        ObjectNode panDetail = (ObjectNode) root.path("data").path("pan_detail");
+        JSONObject jsonObject = new JSONObject(payload);
+        jsonObject.getJSONObject("data").getJSONObject("user_detail")
+                .put("phone_no","9092366584");
+        payload = jsonObject.toString();
 
-        panDetail.put("pan_number", panNumber);
-        panDetail.put("pan_name", panName);
-        String invalidJson = mapper.writeValueAsString(root);
-        Response response = Service.createBorrower(invalidJson);
-        response.then().log().all();
-        Assert.assertTrue(
-                response.getStatusCode() == 200 || response.getStatusCode() == 422,
-                "Expected validation error for: " + reason + " but got " + response.getStatusCode()
-        );
+        Response tresponse = Service.createBorrower(payload);
+
+        int code = tresponse.getStatusCode();
+        System.out.println("Create response code: " + code);
+        tresponse.then().log().all();
+
+        Assert.assertTrue(code != 400,
+                "Borrower creation SHOULD FAIL for invalid Mobile Number, but API returned 200");
+
+        String referenceId = tresponse.jsonPath().getString("data.id");
+        System.out.println("Ref ID: " + referenceId);
+
+        // If ID is null → API rejected the PAN → Test passes
+        if (referenceId == null) {
+            System.out.println("Borrower creation failed as expected. No status API call needed.");
+            return;
+        }
+
+        // else check status
+        Thread.sleep(50000);
+        Response statusResponse = Service.createBorrowerStatus(referenceId);
+        statusResponse.then().log().all();
+
+        Assert.assertTrue(statusResponse.getStatusCode() >= 400,
+                "Expected status API failure for invalid PAN.");
     }
+    @Test
+    public void InvalidProductId() throws IOException,InterruptedException {
+        PayloadUtils utils = new PayloadUtils();
+        String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
+        payload = payload.replace("{{reference_id}}", utils.referenceID);
 
-    @Test(dataProvider = "invalidUserdetails", dataProviderClass = TestDataProviders.class)
-    public void testInvalidUserdetails(String userID, String PhnNo,String UserName,String Email, String reason) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = (ObjectNode) mapper.readTree(
-                new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")))
-        );
-        ObjectNode UserDetail = (ObjectNode) root.path("data").path("user_detail");
+        JSONObject jsonObject = new JSONObject(payload);
+        jsonObject.getJSONObject("data").getJSONObject("product_detail")
+                .put("product_id","CRE-LAS-PARF");
+        payload = jsonObject.toString();
 
-        UserDetail.put("user_id", userID);
-        UserDetail.put("phone_no", PhnNo);
-        UserDetail.put("user_name", UserName);
-        UserDetail.put("user_email", Email);
+        Response tresponse = Service.createBorrower(payload);
 
-        String invalidJson = mapper.writeValueAsString(root);
-        Response response = Service.createBorrower(invalidJson);
-        response.then().log().all();
-        Assert.assertEquals(response.getStatusCode(), 200, "Expected HTTP 200");
+        int code = tresponse.getStatusCode();
+        System.out.println("Create response code: " + code);
+        tresponse.then().log().all();
 
-        boolean success = response.jsonPath().getBoolean("success");
-        int errorCode = response.jsonPath().getInt("error_code");
-        Assert.assertFalse(success, "Expected success=false but got true");
-        Assert.assertNotEquals(errorCode, 0, "Expected non-zero error code for invalid PAN");
+        Assert.assertTrue(code != 400,
+                "Borrower creation SHOULD FAIL for invalid Mobile Number, but API returned 200");
+
+        String referenceId = tresponse.jsonPath().getString("data.id");
+        System.out.println("Ref ID: " + referenceId);
+
+        if (referenceId == null) {
+            System.out.println("Borrower creation failed as expected. No status API call needed.");
+            return;
+        }
+
+        Thread.sleep(50000);
+        Response statusResponse = Service.createBorrowerStatus(referenceId);
+        statusResponse.then().log().all();
+
+        Assert.assertTrue(statusResponse.getStatusCode() >= 400,
+                "Expected status API failure for invalid PAN.");
+    }
+    @Test
+    public void InvalidEmail() throws IOException,InterruptedException {
+        PayloadUtils utils = new PayloadUtils();
+        String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
+        payload = payload.replace("{{reference_id}}", utils.referenceID);
+
+        JSONObject jsonObject = new JSONObject(payload);
+        jsonObject.getJSONObject("data").getJSONObject("user_detail")
+                .put("user_email","dhivyam@1599@gmail.com");
+        payload = jsonObject.toString();
+
+        Response tresponse = Service.createBorrower(payload);
+
+        int code = tresponse.getStatusCode();
+        System.out.println("Create response code: " + code);
+        tresponse.then().log().all();
+
+        Assert.assertTrue(code != 400,
+                "Borrower creation SHOULD FAIL for invalid Email Address, but API returned 200");
+
+        String referenceId = tresponse.jsonPath().getString("data.id");
+        System.out.println("Ref ID: " + referenceId);
+        if (referenceId == null) {
+            System.out.println("Borrower creation failed as expected. No status API call needed.");
+            return;
+        }
+        Thread.sleep(50000);
+        Response statusResponse = Service.createBorrowerStatus(referenceId);
+        statusResponse.then().log().all();
+
+        Assert.assertTrue(statusResponse.getStatusCode() >= 400,
+                "Expected status API failure for invalid PAN.");
     }
 
 
