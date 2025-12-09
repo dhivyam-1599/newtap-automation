@@ -104,23 +104,6 @@
     },
     "pac_reference_id": "60a09a47-04b4-404d-9309-1783430e3950"
   },
-  "liveliness_detail": {
-    "vendor": "HYPERVERGE",
-    "data": {
-      "selfie_image":"{{selfie_image}}",
-      "liveliness": {
-        "result": "SUCCESS",
-        "score": 1,
-        "manual_review_required": false
-      },
-      "face_match": {
-        "result": "SUCCESS",
-        "score": 60,
-        "manual_review_required": false
-      },
-      "timestamp": "2024-04-07T00:00:00"
-    }
-  },
   "bank_account_verification_detail": {
     "bank_account_number": "1705993629261",
     "ifsc_code": "HDFC0000514",
@@ -181,7 +164,51 @@
     ]
   },
   "risk_detail": {
-    "policy_name": "ybl_clm_premium_v1"
+      "policy_name": "ybl_clm_premium_v1",
+      "user_data": {
+        "underwriting_type": "RE_ASSESSMENT",
+        "product": "PL",
+        "monthly_actual_emi_obligation": 71543,
+        "risk_segmentation": "SEGMENT3",
+        "num_credit_cards": 1,
+        "stv3": 50,
+        "credit_cards": [
+          "ABC"
+        ],
+        "housing_loan_amount": 1097500,
+        "is_salaried": true,
+        "amb": 20000,
+        "num_active_consumer_loans": 0,
+        "credit_age_months": 2771,
+        "auto_loan_amount": 0,
+        "credit_card_max_limit": 200000,
+        "bureau_income": 500000,
+        "num_types_credit_line": 0,
+        "asv3": 5,
+        "adb": 0,
+        "income_prediction_confidence": "high",
+        "time_from_last_cl_months": 0,
+        "hashed_pan": "6b609bd7c232ef388114767e252a14f25bb2a3e9c5abd9ffd8acfd5599e0d406",
+        "age": 22,
+        "annual_income": 1248618.8,
+        "grm_decile": 8,
+        "foir": 0.50594485,
+        "stv2": 40,
+        "risk_segment": "low_risk",
+        "occupation": "salaried",
+        "oldest_cc_age_months": 91,
+        "last_6_months_avg_cc_repayment": 0,
+        "num_pl_last_3m": 0,
+        "num_repayments_last_3m": 0,
+        "num_repayments_last_12m": 0,
+        "has_pl_withdrawal_less_than_1L": false,
+        "num_disbursals_last_2y": 0,
+        "has_dpd30_more_than_5000_last_3y": false
+      },
+      "offer_data": {
+        "limit": 100000,
+        "roi": 18.49
+      }
   },
   "underwriting_details": {
     "policy_identifier": "ybl_clm_premium_v1",

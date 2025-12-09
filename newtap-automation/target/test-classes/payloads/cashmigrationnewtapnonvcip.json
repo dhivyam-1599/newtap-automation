@@ -256,7 +256,7 @@
     "bm_decile": 0
   },
   "vcip_detail": {
-    "vcip_enabled": true
+    "vcip_enabled": false
   },
   "economic_profile": {
     "occupation": "Salaried",

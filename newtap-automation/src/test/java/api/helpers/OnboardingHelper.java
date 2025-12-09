@@ -92,7 +92,7 @@ public class OnboardingHelper {
 
     // ---- CASH NON-VCIP BORROWER ----
     public static String createColendingCashNonVcip() throws IOException {
-        Response resp = Service.cashOnboarding(PayloadUtils.buildCashMigrationJson());
+        Response resp = Service.cashOnboarding(PayloadUtils.buildCashMigrationNonVcipJson());
         Assert.assertEquals(resp.getStatusCode(), 200);
         String refId = resp.jsonPath().getString("data.id");
         System.out.println("Workflow_ID : " + refId);
@@ -102,7 +102,7 @@ public class OnboardingHelper {
 
     // ---- NEWTAP NON-VCIP ----
     public static String createNewtapCashNonVcip() throws IOException {
-        Response resp = Service.newtapCashOnboarding(PayloadUtils.buildNewtapCashMigrationJson());
+        Response resp = Service.newtapCashOnboarding(PayloadUtils.buildNewtapCashMigrationNonVcpJson());
         Assert.assertEquals(resp.getStatusCode(), 200);
         String refId = resp.jsonPath().getString("data.id");
         System.out.println("Workflow_ID : " + refId);

@@ -83,9 +83,39 @@ public class PayloadUtils {
                 .replace("{{download_result_location}}", presigned.get("download_result_location"))
                 .replace("${PRODUCT_ID}", productId);
     }
+    public static String buildCashMigrationNonVcipJson() throws IOException {
+        String referenceID = generateReferenceId();
+        String json = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationcolendingnonvcip.json")));
+        Map<String, String> presigned = preSignedHelper();
+        String tenant = ConfigUtils.getTenant();
+        String productId = ConfigUtils.getProductId(tenant);
+
+        return json
+                .replace("{{client_ref_id}}", referenceID)
+                .replace("{{session_id}}",referenceID)
+                .replace("{{image_url}}", presigned.get("image_url"))
+                .replace("{{selfie_image}}", presigned.get("selfie_image"))
+                .replace("{{search_result_location}}", presigned.get("search_result_location"))
+                .replace("{{download_result_location}}", presigned.get("download_result_location"))
+                .replace("${PRODUCT_ID}", productId);
+    }
     public static String buildNewtapCashMigrationJson() throws IOException{
         String referenceID = generateReferenceId();
         String json =new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationnewtap.json")));
+        Map<String, String> presigned = preSignedHelper();
+
+        return json
+                .replace("{{client_ref_id}}", referenceID)
+                .replace("{{session_id}}",referenceID)
+                .replace("{{image_url}}", presigned.get("image_url"))
+                .replace("{{selfie_image}}", presigned.get("selfie_image"))
+                .replace("{{search_result_location}}", presigned.get("search_result_location"))
+                .replace("{{download_result_location}}", presigned.get("download_result_location"));
+    }
+
+    public static String buildNewtapCashMigrationNonVcpJson() throws IOException{
+        String referenceID = generateReferenceId();
+        String json =new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/cashmigrationnewtapnonvcip.json")));
         Map<String, String> presigned = preSignedHelper();
 
         return json

@@ -69,6 +69,8 @@ public class Service {
                 .then()
                 .extract().response();
     }
+
+
     public static Response cashCreateBorrowerStatus(String serviceType, String referenceId) {
         return HeaderUtil.getHeaders(serviceType)
                 .queryParam("reference_id", referenceId)
