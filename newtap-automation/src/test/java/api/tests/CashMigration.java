@@ -78,7 +78,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for CashDobCheck, but got: " + statusCode);
     }
     @Test
     public void PanVsBankCheck() throws IOException,InterruptedException{
@@ -95,7 +95,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for PanVsBankCheck, but got: " + statusCode);
     }
     @Test
     public void PanVsKycCheck() throws IOException,InterruptedException{
@@ -113,7 +113,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for PanVsKycCheck, but got: " + statusCode);
     }
     @Test
     public void AccountTypeValidation() throws IOException,InterruptedException{
@@ -131,7 +131,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for invalid Account type, but got: " + statusCode);
     }
     @Test
     public void CkycS3UrlCheck() throws IOException,InterruptedException{
@@ -149,7 +149,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for null CkycS3Url, but got: " + statusCode);
     }
     @Test
     public void GeoLocationCheck() throws IOException,InterruptedException{
@@ -167,10 +167,10 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for Invalid Geolocation, but got: " + statusCode);
     }
     @Test
-    //need to check
+
     public void PacCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
@@ -190,7 +190,7 @@ public class CashMigration {
     }
     @Test
     public void FaceMatchCheck() throws IOException,InterruptedException{
-        String payload = PayloadUtils.buildCashMigrationJson();
+        String payload = PayloadUtils.buildCashMigrationNonVcipJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("liveliness_detail").getJSONObject("data").getJSONObject("face_match")
                 .put("score","40");
@@ -204,13 +204,13 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for Invalid Face match score, but got: " + statusCode);
     }
     @Test
     public void LivelinessCheck() throws IOException,InterruptedException{
-        String payload = PayloadUtils.buildCashMigrationJson();
+        String payload = PayloadUtils.buildCashMigrationNonVcipJson();
         JSONObject jsonObject = new JSONObject(payload);
-        jsonObject.getJSONObject("kyc_detail").getJSONObject("liveliness")
+        jsonObject.getJSONObject("liveliness_detail").getJSONObject("data").getJSONObject("liveliness")
                 .put("score","30");
         payload= jsonObject.toString();
         Response response = Service.cashOnboarding(payload);
@@ -222,7 +222,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for Invalid liveliness score , but got: " + statusCode);
     }
     @Test
     public void NameCheck() throws IOException,InterruptedException{
@@ -240,7 +240,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for invalid Name, but got: " + statusCode);
     }
     @Test
     public void PincodeCheck() throws IOException,InterruptedException{
@@ -258,7 +258,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for invalid Pincode, but got: " + statusCode);
     }
     @Test
     public void AmlCheck() throws IOException,InterruptedException{
@@ -276,10 +276,9 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for AML Screening, but got: " + statusCode);
     }
     @Test
-    //need to check
     public void UnderwritingCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildNewtapCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
@@ -296,7 +295,7 @@ public class CashMigration {
         statusResponse.then().log().all();
         int statusCode = statusResponse.getStatusCode();
         Assert.assertTrue(statusCode == 200 || statusCode == 201,
-                "Expected 400/500 for invalid PAN, but got: " + statusCode);
+                "Expected 400/500 for invalid Offer data, but got: " + statusCode);
     }
 
 

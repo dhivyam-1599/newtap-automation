@@ -123,7 +123,7 @@ public class OnboardingLas {
         tresponse.then().log().all();
 
         Assert.assertTrue(code != 400,
-                "Borrower creation SHOULD FAIL for invalid Mobile Number, but API returned 200");
+                "Borrower creation SHOULD FAIL for invalid Product ID, but API returned 200");
 
         String referenceId = tresponse.jsonPath().getString("data.id");
         System.out.println("Ref ID: " + referenceId);
@@ -171,7 +171,7 @@ public class OnboardingLas {
         statusResponse.then().log().all();
 
         Assert.assertTrue(statusResponse.getStatusCode() >= 400,
-                "Expected status API failure for invalid PAN.");
+                "Expected status API failure for invalid Email.");
     }
 
 

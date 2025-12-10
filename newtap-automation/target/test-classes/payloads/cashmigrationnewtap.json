@@ -104,25 +104,6 @@
     },
     "pac_reference_id": "60a09a47-04b4-404d-9309-1783430e3950"
   },
-  "liveliness_detail": {
-    "vendor": "HYPERVERGE",
-    "data": {
-      "selfie_image": "{{selfie_image}}",
-      "liveliness": {
-        "result": "SUCCESS",
-        "score": 1,
-        "manual_review_required": false
-      },
-      "face_match": {
-        "result": "SUCCESS",
-        "score": 70,
-        "manual_review_required": false
-      },
-      "timestamp": "2024-04-07T00:00:00",
-      "liveliness_consent": true,
-      "selfie_upload_consent": true
-    }
-  },
   "bank_account_verification_detail": {
     "bank_account_number": "1705993629261",
     "ifsc_code": "HDFC0000514",
