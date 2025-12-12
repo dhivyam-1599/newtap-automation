@@ -1,0 +1,16 @@
+api/newtap_api/EndPoints.class
+api/tests/OnboardingLas.class
+api/newtap_api/Service.class
+api/utilities/database/CashDbQuery.class
+api/utilities/HeaderUtil.class
+api/tests/GenerateJson.class
+api/newtap_api/BaseUrl.class
+api/utilities/PayloadUtils.class
+api/tests/ReKyc.class
+api/tests/CashMigration.class
+api/utilities/TestDataProviders.class
+api/utilities/ConfigUtils.class
+api/utilities/database/DbHost.class
+api/utilities/database/PropertyFileReader.class
+api/utilities/database/DbQuery.class
+api/utilities/DateTimeUtils.class

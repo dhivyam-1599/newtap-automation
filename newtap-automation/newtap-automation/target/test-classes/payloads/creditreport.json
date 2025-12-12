@@ -1,0 +1,6 @@
+{
+"account_holder_reference_id": "{{crn}}",
+"request_id": "{{requestid}}",
+"report_date": "2025-12-08T19:30:00Z",
+"credit_score": 780
+}
