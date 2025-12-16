@@ -1,4 +1,6 @@
 package api.utilities;
+import io.restassured.response.Response;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -159,6 +161,10 @@ public class PayloadUtils {
         objectUrls.put("download_result_location", download_result_location);
 
         return objectUrls;
+    }
+    public static String panvalidationjson() throws IOException{
+        String panjson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/panvalidation.json")));
+        return panjson;
     }
 
 }

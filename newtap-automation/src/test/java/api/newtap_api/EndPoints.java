@@ -14,5 +14,6 @@ public class EndPoints {
     public static String VALIDATE_VCIP_URL = CASH_BASE_URL_ONBOARDING+"/validate/VCIPStatus";
     public static String CREDIT_UPDATE_URL = BUREAU_CREDIT_UPDATE_URL+"/update";
     public static String KYC_SEARCH_URL = CYNTRA_URL+"search";
+    public static String PAN_VALIDATION = BASE_THIRDPARTY_URL+"/pan/validate";
 
 }

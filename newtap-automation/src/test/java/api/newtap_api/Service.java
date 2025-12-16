@@ -105,8 +105,21 @@ public class Service {
                     .then()
                     .extract()
                     .response();
+        }
+            public static Response panvalidation (String payload) {
+                return (Response)given()
+                        .contentType("application/json")
+                        .header("X-APP-TOKEN", "e713e3f1-6016-43ca-8119-3d0e971265da")
+                        .body(payload)
+                        .when()
+                        .log().all()
+                        .post(EndPoints.PAN_VALIDATION)
+                        .then()
+                        .extract()
+                        .response();
+
+    }
 
 
 
-
-    }}
+    }

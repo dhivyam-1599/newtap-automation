@@ -34,7 +34,7 @@ public class OnboardingLas {
         Assert.assertEquals(updateresponse.getStatusCode(), 200);
     }
     @Test
-    public void PanCheck() throws IOException,InterruptedException {
+    public void panCheck() throws IOException,InterruptedException {
         PayloadUtils utils = new PayloadUtils();
         String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         payload = payload.replace("{{reference_id}}", utils.referenceID);
@@ -69,7 +69,7 @@ public class OnboardingLas {
                 "Expected status API failure for invalid PAN.");
     }
     @Test
-    public void MobileCheck() throws IOException,InterruptedException {
+    public void mobileCheck() throws IOException,InterruptedException {
         PayloadUtils utils = new PayloadUtils();
         String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         payload = payload.replace("{{reference_id}}", utils.referenceID);
@@ -106,7 +106,7 @@ public class OnboardingLas {
                 "Expected status API failure for invalid PAN.");
     }
     @Test
-    public void InvalidProductId() throws IOException,InterruptedException {
+    public void invalidProductId() throws IOException,InterruptedException {
         PayloadUtils utils = new PayloadUtils();
         String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         payload = payload.replace("{{reference_id}}", utils.referenceID);
@@ -141,7 +141,7 @@ public class OnboardingLas {
                 "Expected status API failure for invalid PAN.");
     }
     @Test
-    public void InvalidEmail() throws IOException,InterruptedException {
+    public void invalidEmail() throws IOException,InterruptedException {
         PayloadUtils utils = new PayloadUtils();
         String payload = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/createborrower.json")));
         payload = payload.replace("{{reference_id}}", utils.referenceID);

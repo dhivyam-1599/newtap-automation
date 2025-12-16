@@ -28,7 +28,7 @@ public class CashMigration {
     }
 
     @Test
-    public void NewtapCashVcip() throws Exception {
+    public void newtapCashVcip() throws Exception {
         String payload = PayloadUtils.buildNewtapCashMigrationJson()
                 .replace("\"vcip_enabled\": false", "\"vcip_enabled\": true");
 
@@ -44,7 +44,7 @@ public class CashMigration {
     }
 
     @Test
-    public void CashInvalidPan() throws IOException,InterruptedException{
+    public void cashInvalidPan() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObj = new JSONObject(payload);
         jsonObj.getJSONObject("pan_detail")
@@ -63,7 +63,7 @@ public class CashMigration {
     }
     @Test
 
-    public void CashDobCheck() throws IOException,InterruptedException{
+    public void cashDobCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObj = new JSONObject(payload);
         jsonObj.getJSONObject("pan_detail")
@@ -81,7 +81,7 @@ public class CashMigration {
                 "Expected 400/500 for CashDobCheck, but got: " + statusCode);
     }
     @Test
-    public void PanVsBankCheck() throws IOException,InterruptedException{
+    public void panVsBankCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("pan_detail").put("pan_name","Aruna");
@@ -98,7 +98,7 @@ public class CashMigration {
                 "Expected 400/500 for PanVsBankCheck, but got: " + statusCode);
     }
     @Test
-    public void PanVsKycCheck() throws IOException,InterruptedException{
+    public void panVsKycCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("kyc_detail").getJSONObject("data")
@@ -116,7 +116,7 @@ public class CashMigration {
                 "Expected 400/500 for PanVsKycCheck, but got: " + statusCode);
     }
     @Test
-    public void AccountTypeValidation() throws IOException,InterruptedException{
+    public void accountTypeValidation() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("kyc_detail").getJSONObject("data")
@@ -134,7 +134,7 @@ public class CashMigration {
                 "Expected 400/500 for invalid Account type, but got: " + statusCode);
     }
     @Test
-    public void CkycS3UrlCheck() throws IOException,InterruptedException{
+    public void ckycS3UrlCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("kyc_detail").getJSONObject("data")
@@ -152,7 +152,7 @@ public class CashMigration {
                 "Expected 400/500 for null CkycS3Url, but got: " + statusCode);
     }
     @Test
-    public void GeoLocationCheck() throws IOException,InterruptedException{
+    public void geoLocationCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("geo_location_verification_detail").getJSONObject("data")
@@ -171,7 +171,7 @@ public class CashMigration {
     }
     @Test
 
-    public void PacCheck() throws IOException,InterruptedException{
+    public void pacCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("kyc_detail").getJSONObject("data")
@@ -189,7 +189,7 @@ public class CashMigration {
                 "Expected 400/500 for invalid PAN, but got: " + statusCode);
     }
     @Test
-    public void FaceMatchCheck() throws IOException,InterruptedException{
+    public void faceMatchCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationNonVcipJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("liveliness_detail").getJSONObject("data").getJSONObject("face_match")
@@ -207,7 +207,7 @@ public class CashMigration {
                 "Expected 400/500 for Invalid Face match score, but got: " + statusCode);
     }
     @Test
-    public void LivelinessCheck() throws IOException,InterruptedException{
+    public void livelinessCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationNonVcipJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("liveliness_detail").getJSONObject("data").getJSONObject("liveliness")
@@ -225,7 +225,7 @@ public class CashMigration {
                 "Expected 400/500 for Invalid liveliness score , but got: " + statusCode);
     }
     @Test
-    public void NameCheck() throws IOException,InterruptedException{
+    public void nameCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("kyc_detail").getJSONObject("data")
@@ -243,7 +243,7 @@ public class CashMigration {
                 "Expected 400/500 for invalid Name, but got: " + statusCode);
     }
     @Test
-    public void PincodeCheck() throws IOException,InterruptedException{
+    public void pincodeCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("kyc_detail").getJSONObject("data").getJSONObject("segregated_address")
@@ -261,7 +261,7 @@ public class CashMigration {
                 "Expected 400/500 for invalid Pincode, but got: " + statusCode);
     }
     @Test
-    public void AmlCheck() throws IOException,InterruptedException{
+    public void amlCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("pan_detail")
@@ -279,7 +279,7 @@ public class CashMigration {
                 "Expected 400/500 for AML Screening, but got: " + statusCode);
     }
     @Test
-    public void UnderwritingCheck() throws IOException,InterruptedException{
+    public void underwritingCheck() throws IOException,InterruptedException{
         String payload = PayloadUtils.buildNewtapCashMigrationJson();
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("risk_detail").getJSONObject("offer_data")
