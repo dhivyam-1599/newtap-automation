@@ -1,5 +1,6 @@
 package api.utilities;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -75,6 +76,8 @@ public class PayloadUtils {
         Map<String, String> presigned = preSignedHelper();
         String tenant = ConfigUtils.getTenant();
         String productId = ConfigUtils.getProductId(tenant);
+        String policyName = ConfigUtils.getPolicyId(tenant);
+        String policyIdentifier = ConfigUtils.getPolicyIdentifier(tenant);
 
         return json
                 .replace("{{client_ref_id}}", referenceID)
@@ -83,7 +86,10 @@ public class PayloadUtils {
                 .replace("{{selfie_image}}", presigned.get("selfie_image"))
                 .replace("{{search_result_location}}", presigned.get("search_result_location"))
                 .replace("{{download_result_location}}", presigned.get("download_result_location"))
-                .replace("${PRODUCT_ID}", productId);
+                .replace("${PRODUCT_ID}", productId)
+                .replace("${POLICY_NAME}",policyName)
+                .replace("${POLICY_IDENTIFIER}",policyIdentifier);
+
     }
     public static String buildCashMigrationNonVcipJson() throws IOException {
         String referenceID = generateReferenceId();
@@ -91,6 +97,24 @@ public class PayloadUtils {
         Map<String, String> presigned = preSignedHelper();
         String tenant = ConfigUtils.getTenant();
         String productId = ConfigUtils.getProductId(tenant);
+        String policyName = System.getProperty(
+                "policy_name",
+                ConfigUtils.getPolicyId(tenant)
+        );
+
+        String policyIdentifier = System.getProperty(
+                "policy_identifier",
+                ConfigUtils.getPolicyIdentifier(tenant)
+        );
+// 🔑 Generic payload override support
+        String payloadOverride = System.getProperty("payload.override");
+
+        if (payloadOverride != null) {
+            JSONObject jsonObj = new JSONObject(json);
+            JSONObject overrideObj = new JSONObject(payloadOverride);
+            merge(jsonObj, overrideObj);
+            json = jsonObj.toString();
+        }
 
         return json
                 .replace("{{client_ref_id}}", referenceID)
@@ -99,7 +123,9 @@ public class PayloadUtils {
                 .replace("{{selfie_image}}", presigned.get("selfie_image"))
                 .replace("{{search_result_location}}", presigned.get("search_result_location"))
                 .replace("{{download_result_location}}", presigned.get("download_result_location"))
-                .replace("${PRODUCT_ID}", productId);
+                .replace("${PRODUCT_ID}", productId)
+                .replace("${POLICY_NAME}",policyName)
+                .replace("${POLICY_IDENTIFIER}",policyIdentifier);
     }
     public static String buildNewtapCashMigrationJson() throws IOException{
         String referenceID = generateReferenceId();
@@ -133,6 +159,30 @@ public class PayloadUtils {
     public static String generateReferenceId() {
         return "CRE_LAS_UAT_" + UUID.randomUUID().toString().replace("-", "").substring(0, 6);
     }
+    public static String underwriterJson(String tenant) throws IOException {
+
+        String crn = generateReferenceId();
+
+        String payloadPath = switch (tenant) {
+            case "PARFAIT" ->
+                    "src/test/resources/payloads/underwriternewtap.json";
+            case "NEWTAP_YBL" ->
+                    "src/test/resources/payloads/underwriterybl.json";
+            case "NEWTAP_LTF" ->
+                    "src/test/resources/payloads/underwriterltf.json";
+            default ->
+                    throw new IllegalArgumentException("Unsupported tenant: " + tenant);
+        };
+
+        String json = Files.readString(Paths.get(payloadPath));
+
+        String policyName = ConfigUtils.getPolicyId(tenant);
+
+        return json
+                .replace("{{CRN}}", crn)
+                .replace("{{POLICY_NAME}}", policyName);
+    }
+
 
     public static Map<String, String> preSignedHelper() throws IOException {
         String imageObjectPath = "kyc_details/ckyc/images/2025/07/31/04/63e7b3d4-6203-451c-a09e-fb45be1b7f5b.jpeg";
@@ -166,6 +216,22 @@ public class PayloadUtils {
         String panjson = new String(Files.readAllBytes(Paths.get("src/test/resources/payloads/panvalidation.json")));
         return panjson;
     }
+    private static void merge(JSONObject target, JSONObject source) {
+        for (String key : source.keySet()) {
+            Object value = source.get(key);
+
+            if (value instanceof JSONObject
+                    && target.has(key)
+                    && target.get(key) instanceof JSONObject) {
+
+                merge(target.getJSONObject(key), (JSONObject) value);
+
+            } else {
+                target.put(key, value);
+            }
+        }
+    }
+
 
 }
 

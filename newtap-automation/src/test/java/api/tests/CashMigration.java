@@ -266,6 +266,8 @@ public class CashMigration {
         JSONObject jsonObject = new JSONObject(payload);
         jsonObject.getJSONObject("pan_detail")
                 .put("pan_number","MPSPS4100L").put("pan_name","Dawood Ibrahim Kaskar");
+        JSONObject jsonObjectg = jsonObject.getJSONObject("pan_detail");
+        jsonObjectg.remove("dob");
         payload= jsonObject.toString();
         Response response = Service.cashOnboarding(payload);
         Assert.assertEquals(response.getStatusCode(),200,"Borrower creation should still succeed");

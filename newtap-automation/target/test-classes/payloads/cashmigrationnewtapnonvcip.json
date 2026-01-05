@@ -110,11 +110,13 @@
       "selfie_image": "{{selfie_image}}",
       "liveliness": {
         "result": "SUCCESS",
+        "vendor_response_log": "logs",
         "score": 1,
         "manual_review_required": false
       },
       "face_match": {
         "result": "SUCCESS",
+        "vendor_response_log": "logs",
         "score": 70,
         "manual_review_required": false
       },

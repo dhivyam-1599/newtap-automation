@@ -164,7 +164,7 @@
     ]
   },
   "risk_detail": {
-      "policy_name": "ybl_clm_premium_v1",
+      "policy_name": "${POLICY_NAME}",
       "user_data": {
         "underwriting_type": "RE_ASSESSMENT",
         "product": "PL",
@@ -211,7 +211,7 @@
       }
   },
   "underwriting_details": {
-    "policy_identifier": "ybl_clm_premium_v1",
+    "policy_identifier": "${POLICY_IDENTIFIER}",
     "income": 605445.4,
     "monthly_liability": 25997,
     "monthly_income": 50453.78,

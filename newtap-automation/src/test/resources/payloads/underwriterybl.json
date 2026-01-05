@@ -1,0 +1,11 @@
+{
+"policy_name": "{{POLICY_NAME}}",
+"user_data": {
+"crn": "{{CRN}}",
+"bureau_pull_date": "2025-11-25",
+"grm_decile":5,
+"stv3": 70,
+  "bureau_score": 750
+},
+"offer_data": {}
+}

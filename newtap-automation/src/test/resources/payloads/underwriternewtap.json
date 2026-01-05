@@ -1,0 +1,20 @@
+{
+  "policy_name": "{{POLICY_NAME}}",
+  "user_data": {
+    "crn": "{{CRN}}",
+    "annual_income": 700000,
+    "age": 35,
+    "bureau_score": 750,
+    "num_credit_cards": 2,
+    "foir": 0.4,
+    "bureau_pull_date": "2025-11-25",
+    "num_active_tradelines": 3,
+    "grm_decile": 3,
+    "stv3": 50,
+    "risk_segmentation": "SEGMENT3"
+  },
+  "offer_data": {
+    "limit": 200000,
+    "roi": 16.5
+  }
+}

@@ -45,11 +45,12 @@ public class HeaderUtil {
                 break;
 
             case "CASH":
-                headers.put("X-Tenant", reader.getProperty("cash-Tenant"));
+                headers.put("X-Tenant", ConfigUtils.getTenant());
                 headers.put("X-LSP", "CASH");
                 headers.put("X-Lob", "CASH");
                 headers.put("X-LSP-User-Id", reader.getProperty("cash-LSP-User-Id"));
                 break;
+
 
             case "NEWTAP100%":
                 headers.put("X-Tenant", reader.getProperty("newtap-Tenant"));

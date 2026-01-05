@@ -9,7 +9,7 @@
   "user_detail": {
     "user_id": "24f05d9a-07d7-448a-9ce9-3fe2db2022c2",
     "phone_no": "9092366584",
-    "user_name": "Ms Dhivya",
+    "user_name": "Dhivya M",
     "user_email": "dhivyam1599@gmail.com"
   },
   "consent_detail": [
@@ -107,18 +107,22 @@
   "liveliness_detail": {
     "vendor": "HYPERVERGE",
     "data": {
-      "selfie_image":"{{selfie_image}}",
+      "selfie_image": "{{selfie_image}}",
       "liveliness": {
         "result": "SUCCESS",
+        "vendor_response_log": "logs",
         "score": 1,
         "manual_review_required": false
       },
       "face_match": {
         "result": "SUCCESS",
-        "score": 60,
+        "vendor_response_log": "logs",
+        "score": 70,
         "manual_review_required": false
       },
-      "timestamp": "2024-04-07T00:00:00"
+      "timestamp": "2024-04-07T00:00:00",
+      "liveliness_consent": true,
+      "selfie_upload_consent": true
     }
   },
   "bank_account_verification_detail": {
@@ -181,7 +185,7 @@
     ]
   },
   "risk_detail": {
-      "policy_name": "ybl_clm_premium_v1",
+      "policy_name": "${POLICY_NAME}",
       "user_data": {
         "underwriting_type": "RE_ASSESSMENT",
         "product": "PL",
@@ -224,7 +228,7 @@
       }
    },
   "underwriting_details": {
-    "policy_identifier": "ybl_clm_premium_v1",
+    "policy_identifier": "${POLICY_IDENTIFIER}",
     "income": 605445.4,
     "monthly_liability": 25997,
     "monthly_income": 50453.78,

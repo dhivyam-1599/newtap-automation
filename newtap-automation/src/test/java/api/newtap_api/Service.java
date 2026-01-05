@@ -119,7 +119,33 @@ public class Service {
                         .response();
 
     }
+    public static Response underwriter (String payload,String tenant) {
+        return (Response)given()
+                .contentType("application/json")
+                .header("X-Tenant",tenant)
+                .header("X-Lob","CASH")
+                .body(payload)
+                .when()
+                .log().all()
+                .post(EndPoints.UNDERWRITER)
+                .then()
+                .extract()
+                .response();
 
+    }
+    public static Response underwriting (String payload,String tenant) {
+        return (Response)given()
+                .contentType("application/json")
+                .header("X-Tenant",tenant)
+                .header("X-Lob","CASH")
+                .body(payload)
+                .when()
+                .log().all()
+                .post(EndPoints.UNDERWRITER)
+                .then()
+                .extract()
+                .response();
 
+    }
 
     }
